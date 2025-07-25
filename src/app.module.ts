@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
@@ -36,5 +37,6 @@ import { Task } from './tasks/entities/task.entity';
     UsersModule,
     TasksModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
