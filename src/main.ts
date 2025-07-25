@@ -12,12 +12,13 @@ async function bootstrap() {
     transform: true,
   }));
 
-  // Habilitar CORS para desarrollo
+  // Configuración CORS simplificada y permisiva
   app.enableCors({
-    origin: ['https://test-front-fcwugvfhe-santijcanos-projects.vercel.app'], 
+    origin: true, // Permitir todos los orígenes temporalmente para debug
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['*'],
+    optionsSuccessStatus: 200,
   });
 
   await app.listen(process.env.PORT || 3000, '0.0.0.0');
