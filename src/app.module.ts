@@ -14,16 +14,22 @@ import { Task } from './tasks/entities/task.entity';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DATABASE_HOST'),
-        port: configService.get('DATABASE_PORT'),
-        username: configService.get('DATABASE_USERNAME'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_NAME'),
-        entities: [User, Task],
-        synchronize: true, // Solo para desarrollo
-      }),
+      useFactory: (configService: ConfigService) => {
+        const isProduction = configService.get('NODE_ENV') === 'production';
+        
+        return {
+          type: 'postgres',
+          host: configService.get('DATABASE_HOST'),
+          port: parseInt(configService.get('DATABASE_PORT') || '5432'),
+          username: configService.get('DATABASE_USERNAME'),
+          password: configService.get('DATABASE_PASSWORD'),
+          database: configService.get('DATABASE_NAME'),
+          entities: [User, Task],
+          synchronize: !isProduction, // false en producción
+          ssl: isProduction ? { rejectUnauthorized: false } : false,
+          logging: !isProduction,
+        };
+      },
       inject: [ConfigService],
     }),
     AuthModule,
