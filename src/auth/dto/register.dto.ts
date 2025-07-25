@@ -1,6 +1,7 @@
 // src/auth/dto/register.dto.ts
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
+//con decoradores
 export class RegisterDto {
   @IsEmail()
   @IsNotEmpty()

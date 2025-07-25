@@ -121,4 +121,3 @@ Puedes probar todos los endpoints de la API usando [Postman](https://www.postman
 - Puedes guardar variables de entorno en Postman para los tokens y URLs.
 - Usa la función de **Tests** de Postman para validar respuestas automáticamente.
 
-
