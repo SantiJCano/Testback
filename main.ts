@@ -12,12 +12,20 @@ async function bootstrap() {
     transform: true,
   }));
 
-  // Habilitar CORS para desarrollo
+  // Habilitar CORS para desarrollo y producción
   app.enableCors({
-    origin: 'https://test-front-fcwugvfhe-santijcanos-projects.vercel.app', 
+    origin: [
+      'http://localhost:5173', // Vite dev server
+      'http://localhost:3000', // Desarrollo local
+      'https://test-front-fcwugvfhe-santijcanos-projects.vercel.app', // Frontend en Vercel
+      /\.vercel\.app$/, // Cualquier subdominio de Vercel
+      /\.onrender\.com$/, // Cualquier subdominio de Render
+    ],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   await app.listen(process.env.PORT || 3000, '0.0.0.0');
